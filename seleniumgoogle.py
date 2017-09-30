@@ -62,7 +62,7 @@ class Browser:
         return results
 
 
-sQuery = '"Най-много разчитам на"'
+sQuery = raw_input("Please enter your Google search string: ")
 
 #path = '/usr/bin/phantomjs' ## SET YOU PATH TO phantomjs
 path = '/Applications/phantomjs/bin/phantomjs' ## SET YOU PATH TO phantomjs
@@ -113,13 +113,36 @@ def visible_texts(soup):
     # collapse multiple spaces to two spaces.
     return RE_SPACES.sub('  ', text)
 
+#Clear html and make it text:
+TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'p', 'li']
+
+def html_to_text(s):
+    for tag in s.find_all(TAGS):
+        yield tag.get_text()
+
+
+result = []
+
+
+for iSoup in soup:
+    for x in html_to_text(iSoup):
+        result.append(x)
+        print ((x.encode('utf-8')))
+    #for elem in iSoup(text=re.compile(r""+sQuery, re.MULTILINE)):
+        #print elem.parent
+
+
+
+'''
 
 for content in soup:
     textFiltered.append(visible_texts(content))
 
 print (len(textFiltered))
-print ('\n'+'\n'.join([x.decode('utf-8') for x in textFiltered]))
+print ('\n'+'\n'.join([x for x in textFiltered]))
+print ('\n'+'\n'.join(textFiltered))
 
+'''
 
 '''
 
